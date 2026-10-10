@@ -1,3 +1,68 @@
 # India Public Equities (Constituents 91 to 120) - 1-Minute Historical Kline Archive
 
-Initializing cloud ingestion pipeline for constituents 91 to 120...
+An institutional-grade, open-source archive of cleaned, standardized, and validated **1-minute intraday historical candlestick data** for **India's Top Liquid Companies (Batch 91 to 120)** with daily automated cloud ingestion.
+
+---
+
+## 🏛️ Directory Architecture & Strict Date-Wise Hierarchy
+
+Every stock is strictly organized into daily CSVs partitioned by Year/Month/Date:
+
+```text
+India-Stocks-91-120-Historical-Data/
+├── 360ONE/
+│   └── 1m/
+│       ├── README.md
+│       └── 2026/
+│           └── 10/
+│               ├── 360ONE_1m_2026-10-01.csv
+│               ├── 360ONE_1m_2026-10-05.csv
+│               └── 360ONE_1m_2026-10-09.csv
+├── DABUR/
+│   └── 1m/...
+└── ... [All 30 Companies]
+```
+
+---
+
+## 📊 Dataset Overview
+- **Constituents:** 30 Benchmark Companies (Rank 91 to 120)
+- **Timeframe:** 1 Minute (`1m`)
+- **Total Archived Daily Files:** `210` sessions
+- **Total 1-Minute Candles:** `76,144` candles
+- **Last Ingested:** `2026-10-10 17:41:21 UTC`
+- **Trading Sessions:** Monday – Friday, 09:15 to 15:30 IST (03:45 to 10:00 UTC)
+
+---
+
+## 📑 Data Schema (Uniform Across All Files)
+
+| Column Name | Type | Description | Example |
+| :--- | :--- | :--- | :--- |
+| `timestamp` | `int64` | Candle open time in Unix milliseconds (UTC) | `1791517500000` |
+| `datetime_utc` | `string` | Standard ISO human-readable UTC timestamp | `2026-10-09 03:45:00` |
+| `open` | `float64` | Opening price in INR | `532.10` |
+| `high` | `float64` | Highest price reached during the 1-minute window | `533.40` |
+| `low` | `float64` | Lowest price reached during the 1-minute window | `531.80` |
+| `close` | `float64` | Closing price of the 1-minute candle | `532.90` |
+| `volume` | `float64` | Cumulative volume traded in the 1-minute candle | `5610` |
+
+---
+
+## ⚡ 1-Line Pandas Stream Loader (No Clone Required)
+
+Stream any stock's 1-minute data directly from GitHub's raw CDN into Pandas in 1 second:
+
+```python
+import pandas as pd
+
+# Load 360ONE 1-minute data for October 09, 2026
+url = "https://raw.githubusercontent.com/parshant65-lang/India-Stocks-91-120-Historical-Data/main/360ONE/1m/2026/10/360ONE_1m_2026-10-09.csv"
+df = pd.read_csv(url)
+print(df.head())
+```
+
+---
+
+## 🔄 Daily Automated Cloud Ingestion
+A GitHub Actions workflow runs every weekday post-market (**Monday to Friday at 16:30 IST / 11:00 UTC**) to query Yahoo Finance, slice newly closed 1-minute sessions into daily CSVs, de-duplicate timestamps, and commit updates automatically.
