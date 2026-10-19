@@ -30,7 +30,7 @@ India-Stocks-91-120-Historical-Data/
 - **Timeframe:** 1 Minute (`1m`)
 - **Total Archived Daily Files:** `390` sessions
 - **Total 1-Minute Candles:** `141,090` candles
-- **Last Ingested:** `2026-10-19 18:42:37 UTC`
+- **Last Ingested:** `2026-10-19 19:19:06 UTC`
 - **Trading Sessions:** Monday – Friday, 09:15 to 15:30 IST (03:45 to 10:00 UTC)
 
 ---
